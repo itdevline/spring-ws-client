@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.mywebserviceexample.com" 
+ xmlns:tns="http://www.mywebserviceexample.com"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+ name="WebserviceRequestService">
+ 
+ 
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://www.mywebserviceexample.com"
+                attributeFormDefault="unqualified"
+                elementFormDefault="qualified">
+      <xsd:element name="webservicerequest">
+        <xsd:complexType>
+          <xsd:sequence>
+
+            <xsd:element maxOccurs="1" minOccurs="1" name="item_id" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="item_name" type="xsd:string"/>
+            <xsd:element maxOccurs="1" minOccurs="1" name="item_desc" type="xsd:string"/>
+
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    <xsd:element name="webservicereresponse">
+      <xsd:complexType>
+        <xsd:sequence>
+
+          <xsd:element name="token" type="xsd:string"/>
+          <xsd:element name="item_id" type="xsd:string"/>
+          <xsd:element name="item_name" type="xsd:string"/>
+          <xsd:element name="item_desc" type="xsd:string"/>
+
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  </wsdl:types>
+  
+  
+  <wsdl:message name="webservicereresponse">
+    <wsdl:part name="parameters" element="tns:webservicereresponse"/>
+  </wsdl:message>
+  <wsdl:message name="webservicerequest">
+    <wsdl:part name="parameters" element="tns:webservicerequest"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="WebServicePortType">
+    <wsdl:operation name="Webservice">
+      <wsdl:input message="tns:webservicerequest" name="webservicerequest"/>
+      <wsdl:output message="tns:webservicereresponse" name="webservicereresponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  
+  <wsdl:binding name="WebServiceSoapBinding" type="tns:WebServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Webservice">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="webservicerequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="webservicereresponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  
+  <wsdl:service name="WebserviceRequestService">
+    <wsdl:port name="SOAPHTTP" binding="tns:WebServiceSoapBinding">
+      <soap:address location="http://localhost:8080/ws/mywebservice"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
